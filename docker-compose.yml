@@ -1,0 +1,7 @@
+services:
+  web-lexis:
+    build: .
+    container_name: web-lexis
+    restart: always
+    ports:
+      - "3000:3000"
