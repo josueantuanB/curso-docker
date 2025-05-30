@@ -7,3 +7,33 @@ services:
       - "3000:3000"
     volumes:
       - ./files:/app/files
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - web-lexis_network
+  back-jar:
+    build: ./back
+    container_name: back-jar
+    restart: always
+    ports:
+      - "8089:8080"
+    environment:
+      SPRING_APPLICATION_JSON: '{
+          "spring.datasource.url":"jdbc:mysql://mysql:3306/docker_test?serverTimezone=America/Guayaquil",
+          "spring.datasource.username":"root",
+          "spring.datasource.password": "rootpassword"
+        }'
+    networks:
+      - web-lexis_network
+volumes:
+  mysql_data:
+networks:
+  web-lexis_network:
