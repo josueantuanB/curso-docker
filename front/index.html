@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Fetch GET Demo</title>
+</head>
+<body>
+  <h1>Respuesta de /test</h1>
+  <pre id="output">Cargando...</pre>
+
+  <script>
+    fetch('http://localhost:8080/test')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error en la solicitud: ' + response.status);
+        }
+        return response.text(); // o .json() si la respuesta es JSON
+      })
+      .then(data => {
+        document.getElementById('output').textContent = data;
+      })
+      .catch(error => {
+        document.getElementById('output').textContent = 'Error: ' + error.message;
+      });
+  </script>
+</body>
+</html>
